@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play with Bots Setup</title>
+    <!-- Here are the css style tags for this page-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Play with Bots</h1>
+        <form method="post">
+            <!-- Using django to prevent against csrf attacks-->
+            {% csrf_token %}
+            <!-- Setting up the form for initial dice choicse, only allowing valid inputs-->
+            <label for="initial_dice">Number of Initial Dice:</label>
+            <select id="initial_dice" name="initial_dice" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
+            <!-- Setting up the form for number of bots, only allowing up to 6 players total, so the interface works properly-->
+            <label for="num_bots">Number of Bots:</label>
+            <select id="num_bots" name="num_bots" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+             <!-- Allowing user to start game -->
+            <button type="submit">Start Game</button>
+        </form>
+    </div>
+</body>
+</html>

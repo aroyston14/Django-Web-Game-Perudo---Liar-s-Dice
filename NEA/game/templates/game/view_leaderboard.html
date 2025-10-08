@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Setting up the css style tags for the page-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .leaderboard-table {
+            border-collapse: collapse;
+            width: 60%;
+            min-width: 500px;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .sort-options {
+            margin-top: 10px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Title -->
+        <h1>Leaderboard</h1>
+
+        <!-- Setting up the leaderboard table, with each row containing a user's username, wins, games and win pct -->
+        <table class="leaderboard-table">
+            <tr>
+                <th>Username</th>
+                <th>Wins</th>
+                <th>Games</th>
+                <th>Win Percentage</th>
+            </tr>
+            <!-- Iterate through the sorted user list, displaying each user's stats in the correct order -->
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.wins }}</td>
+                <td>{{ user.games_played }}</td>
+                <td>{{ user.win_pct|floatformat:1 }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Giving the user to select how they would like to sort the leaderboard, using checkboxes -->
+        <div class="sort-options">
+            <p><strong>Sort By:</strong></p>
+            <form method="get">
+                <label class="checkbox-label">
+                    <input type="radio" name="sort" value="wins" onchange="this.form.submit()" {% if sort_by == 'wins' %}checked{% endif %}>
+                    Wins
+                </label>
+                <label class="checkbox-label">
+                    <input type="radio" name="sort" value="games" onchange="this.form.submit()" {% if sort_by == 'games' %}checked{% endif %}>
+                    Games
+                </label>
+                <label class="checkbox-label">
+                    <input type="radio" name="sort" value="win_pct" onchange="this.form.submit()" {% if sort_by == 'win_pct' %}checked{% endif %}>
+                    Win %
+                </label>
+            </form>
+        </div>
+    </div>
+    <!-- Allowing the user to use main_menu url to return to menu -->
+    <a href="{% url 'main_menu' %}">Back to Main Menu</a>
+</body>
+</html>

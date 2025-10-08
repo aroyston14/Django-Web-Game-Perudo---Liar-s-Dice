@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perudo WebGame</title>
+    <!-- Here are the css style tags for this page-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            grid-column: span 2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .login-section, .register-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-section h2, .register-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            margin-top: 20px;
+            color: red;
+            text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .button-group button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .button-group button:hover {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Title -->
+        <div class="title">
+            <h1>Perudo WebGame</h1>
+        </div>
+
+        <!-- Section for user to enter details and login -->
+        <div class="login-section">
+            <h2>Have an account?</h2>
+            <form method="post">
+                <!-- Using django to prevent against csrf attacks-->
+                {% csrf_token %}
+                <!-- Display any error messages that might have occured -->
+                {% if messages %}
+                    <div class="error-message">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="{{ request.POST.username }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Register Section -->
+        <div class="register-section">
+            <h2>If not, Register</h2>
+            <!-- If the register button is pressed, this redirects the user to the registration page using the 'register' url -->
+            <form action="{% url 'register' %}" method="get">
+                <button type="submit">Create an account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

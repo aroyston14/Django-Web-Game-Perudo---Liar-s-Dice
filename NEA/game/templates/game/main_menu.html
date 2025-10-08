@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- setting up css style tags for the page-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .username-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 1.2rem;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .button-container a {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: black;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Display the username of the currently logged in user-->
+        <div class="username-box">
+            {{ user.username }}
+        </div>
+
+        <!-- Page title -->
+        <h1>Main Menu</h1>
+
+        <!-- Providing all the buttons using urls to all the different pages-->
+        <div class="button-container">
+            <a href="{% url 'setup_pass_and_play' %}">Pass and Play</a>
+            <a href="{% url 'setup_bot_game' %}">Play with Bots</a>
+            <a href="{% url 'game_rules' %}">Game Rules and Tutorial</a>
+            <a href="{% url 'view_leaderboard' %}">Leaderboard</a>
+            <a href="{% url 'view_profile' %}">View Profile</a>
+            <a href="{% url 'home' %}">Log Out</a>
+          
+        </div>
+    </div>
+</body>
+</html>

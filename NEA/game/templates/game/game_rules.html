@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Rules and Tutorial</title>
+    <!-- Setting up the css style tags-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 50px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+ 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Displaying the relevant advice and rules for the user to read-->
+        <h1>Game Rules and Tutorial</h1>
+
+        <h2>How to Play</h2>
+        <p>Every player starts with a pre-selected number of dice and players take turns making bids over the number of dice with a certain value in the game. Each turn the player can either raise the current bid (or make a bid if no bid has been made) or call the previous player's bluff. If a bluff call is successful, the player who made the bid loses a dice and a new round begins. If it is unsuccessful and their bid turns out to be true, the current player who called the bluff loses a dice, and the game continues.</p>
+
+        <h2>Winning the Game</h2>
+        <p>You win the game by outlasting your opponents and being the last player in the game with any dice left.</p>
+
+        <h2>Additional Tips</h2>
+        <p>When playing pass and play with friends, make sure to do your best to trick your opponents into losing their dice against you. Bluffing, double bluffing or even triple bluffing can be an extremely effective way of coercing your opponents into making poor decisions. Remember: play the man, not the game.</p>
+
+        <a href="{% url 'main_menu' %}">Back to Main Menu</a>
+
+        <h3> If you are still unsure of the rules of Liar's dice, watch this video by 'Gather Together Games' on Youtube.</h3>
+
+        <!-- Setting up an embedded youtube video for the user to watch-->
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/fAbnMuiR734?si=uE4xQQmvmTNBgOlQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    </div>
+
+    
+</body>
+</html>

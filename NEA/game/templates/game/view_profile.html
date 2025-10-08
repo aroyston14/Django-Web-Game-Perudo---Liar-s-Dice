@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Profile</title>
+    <!-- Setting up the css style tags for the page-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .profile-info p {
+            margin: 5px 0;
+        }
+        form {
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Profile</h1>
+
+        <!-- Displaying the user's username and unhashed password -->
+        <div class="profile-info">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Password</strong> {{ unhashed_password }}</p>
+        </div>
+
+        <!-- Displaying any error messages if there are any-->
+        {% if messages %}
+            <div class="Message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+                    </div>
+        {% endif %}
+
+        <!-- Setting up the form for the user to enter their password details to change password -->
+        <form method="post">
+            {% csrf_token %}
+            <label for="old_password">Old Password</label>
+            <input type="password" id="old_password" name="old_password" required>
+
+            <label for="new_password">New Password</label>
+            <input type="password" id="new_password" name="new_password" required>
+
+            <label for="confirm_password">Confirm New Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <button type="submit">Change Password</button>
+        </form>
+
+        <!-- Setting up back to main menu button, using the main_menu url -->
+        <a href="{% url 'main_menu' %}">Back to Main Menu</a>
+    </div>
+</body>
+</html>

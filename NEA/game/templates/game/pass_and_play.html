@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pass and Play</title>
+    <!-- Setting out the css style tags for this page -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .player-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            color: black;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+        .player .name {
+            font-weight: bold;
+        }
+        .player .dice-count {
+            font-size: 14px;
+        }
+        .Leave_game {
+            text-allign: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .current-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .message {
+            color: blue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dice-values span {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Setting up a player bar to show players and their dice number at top of screen -->
+        <div class="player-bar">
+            {% for player in game_data.players %}
+                <div class="player">
+                    <div class="name">{{ player.name }}</div>
+                    <div class="dice-count">Dice: {{ player.dice }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        
+
+
+        <h1>Pass and Play</h1>
+
+        <!-- Display who the current player is and their bid, if there is one -->
+        <div class="current-info">
+            <p><strong>Current Player:</strong> {{ current_player_name }}</p>
+            {% if game_data.current_bid %}
+                <p><strong>Current Bid:</strong> {{ game_data.current_bid.count }} of {{ game_data.current_bid.value }}</p>
+            {% else %}
+                <p>No current bid.</p>
+            {% endif %}
+        </div>
+
+        <!-- Displaying the result of a bluff call -->
+        {% if bluff_result %}
+            <div class="message">{{ bluff_result }}</div>
+        {% endif %}
+
+        <!-- Making sure to display the most recent error messages if there is one -->
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+
+        <!-- Allow the user to leave the game, and go back to the main menu-->
+
+        <div class ='Leave_game'>
+            <a href="{% url 'main_menu' %}">Back to Main Menu</a>
+        </div>
+
+        <!-- Display the current player's dice, if they have rolled -->
+        <h2>Your Dice</h2>
+        <div class="dice-values">
+            {% if rolled %}
+                {% for value in current_player_dice %}
+                    <span>{{ value }}</span>
+                {% endfor %}
+            
+            {% endif %}
+        </div>
+
+        <!-- Setting up the role dice and bluff call buttons -->
+        {% if not round_ended %}
+            <form method="POST" class="actions">
+                <!-- Using django to prevent against csrf attacks-->
+                {% csrf_token %}
+                <button type="submit" name="action" value="roll_dice">Roll Dice</button>
+                <button type="submit" name="action" value="call_bluff">Call Bluff</button>
+            </form>
+
+            <!-- Setting up the form for user to enter new bid-->
+            <h2>Make a Bid</h2>
+            <form method="POST" class="make-bid">
+                <!-- Using django to prevent against csrf attacks-->
+                {% csrf_token %}
+                <label for="bid_count">Count:</label>
+                <input type="number" id="bid_count" name="bid_count" min="1" required>
+                <label for="bid_value">Value:</label>
+                <input type="number" id="bid_value" name="bid_value" min="1" max="6" required>
+                <button type="submit" name="action" value="make_bid">Submit Bid</button>
+            </form>
+        {% endif %}
+
+        <!-- Only showing the end round button, if the round has ended -->
+        {% if round_ended %}
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" name="action" value="end_round" class="end-round">End Round</button>
+            </form>
+        {% endif %}
+
+    </div>
+</body>
+</html>
+
