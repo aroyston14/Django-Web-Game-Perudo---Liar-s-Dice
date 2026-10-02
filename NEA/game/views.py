@@ -11,13 +11,14 @@ from django.contrib import messages
 
 #importing hte regular expression module to help wiht later data validation
 import re
+import os
 
 #sets up the backend database connection
 def get_db_connection():
     return mysql.connector.connect(
         host ="localhost",
         user ="root",
-        password = "NEApassword2025",
+        password = os.environ.get("NEA_DB_PASSWORD", ""),
         database ="NEA_db",
     )
 
